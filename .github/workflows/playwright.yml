@@ -51,6 +51,12 @@ jobs:
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
 
+      - name: Setup BrowserStack directory
+        run: |
+          sudo mkdir -p /home/runner/.browserstack
+          sudo chown -R $USER:$USER /home/runner/.browserstack
+          sudo chmod -R 755 /home/runner/.browserstack
+
       - name: Run tests without browserstack-node-sdk
         run: npm run pw-test
         env:
@@ -58,7 +64,7 @@ jobs:
           BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
 
       - name: Run tests with browserstack-node-sdk
-        run: sudo npm run sample-test
+        run: npm run sample-test
         env:
           BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USERNAME }}
           BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}

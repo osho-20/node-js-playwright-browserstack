@@ -71,11 +71,17 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Setup BrowserStack directory
+        run: |
+          sudo mkdir -p /home/runner/.browserstack
+          sudo chown -R $USER:$USER /home/runner/.browserstack
+          sudo chmod -R 755 /home/runner/.browserstack
+
       - name: Run sample tests
-        run: sudo npm run sample-test
+        run: npm run sample-test
 
       - name: Run local tests
-        run: sudo npm run sample-local-test
+        run: npm run sample-local-test
 
       - if: always()
         uses: actions/github-script@98814c53be79b1d30f795b907e553d8679345975
